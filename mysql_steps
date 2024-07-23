@@ -1,0 +1,17 @@
+sudo apt update
+sudo apt install mysql-server -y
+Secure MySQL installation:
+
+sh
+Copy code
+sudo mysql_secure_installation
+Create a database and user for the web application:
+
+sh
+Copy code
+sudo mysql -u root -p
+CREATE DATABASE webapp_db;
+CREATE USER 'webapp_user'@'%' IDENTIFIED BY 'password';
+GRANT ALL PRIVILEGES ON webapp_db.* TO 'webapp_user'@'%';
+FLUSH PRIVILEGES;
+EXIT;
