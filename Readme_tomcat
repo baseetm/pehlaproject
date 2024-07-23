@@ -1,0 +1,2 @@
+Make it executable: chmod +x install_tomcat.sh.
+Run it: ./install_tomcat.sh
