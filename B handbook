@@ -1,0 +1,119 @@
+Let's troubleshoot and correct the PHP script to ensure it works correctly with the MySQL database. Here are the steps to follow:
+
+### Prerequisites
+
+1. **Ensure Apache and PHP are installed on VM_RollNumber_1**:
+   ```sh
+   sudo apt update
+   sudo apt install apache2 php libapache2-mod-php php-mysql -y
+   ```
+
+2. **Ensure MySQL is installed and configured on VM_RollNumber_2** as per the previous instructions.
+
+### Step 1: Verify Database Connection
+
+1. **Test MySQL connection with PHP**:
+   Create a simple PHP script to test the connection:
+   ```php
+   <?php
+   $servername = "VM_RollNumber_2_IP";
+   $username = "webapp_user";
+   $password = "password";
+   $dbname = "webapp_db";
+
+   // Create connection
+   $conn = new mysqli($servername, $username, $password, $dbname);
+
+   // Check connection
+   if ($conn->connect_error) {
+       die("Connection failed: " . $conn->connect_error);
+   }
+   echo "Connected successfully";
+   ?>
+   ```
+
+   - Save this script as `test_connection.php` in the `/var/www/html` directory.
+   - Replace `VM_RollNumber_2_IP` with the actual IP address of VM_RollNumber_2.
+   - Access the script from your web browser at `http://VM_RollNumber_1_IP/test_connection.php`.
+
+### Step 2: Correct the Main PHP Script
+
+1. **Create the PHP script**:
+   - Save the following script as `index.php` in the `/var/www/html` directory of VM_RollNumber_1:
+
+   ```php
+   <?php
+   $servername = "VM_RollNumber_2_IP";
+   $username = "webapp_user";
+   $password = "password";
+   $dbname = "webapp_db";
+
+   // Create connection
+   $conn = new mysqli($servername, $username, $password, $dbname);
+
+   // Check connection
+   if ($conn->connect_error) {
+       die("Connection failed: " . $conn->connect_error);
+   }
+
+   if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+       $name = $conn->real_escape_string($_POST['name']);
+       $sql = "INSERT INTO records (name) VALUES ('$name')";
+       if ($conn->query($sql) === TRUE) {
+           echo "New record created successfully";
+       } else {
+           echo "Error: " . $sql . "<br>" . $conn->error;
+       }
+   }
+
+   $result = $conn->query("SELECT * FROM records");
+   ?>
+
+   <!DOCTYPE html>
+   <html>
+   <body>
+   <form method="post">
+       Name: <input type="text" name="name">
+       <input type="submit" value="Submit">
+   </form>
+   <h2>Records:</h2>
+   <ul>
+       <?php while($row = $result->fetch_assoc()): ?>
+           <li><?php echo htmlspecialchars($row['name']); ?></li>
+       <?php endwhile; ?>
+   </ul>
+   </body>
+   </html>
+   ```
+
+2. **Access the PHP script**:
+   - Open a web browser and navigate to `http://VM_RollNumber_1_IP/index.php`.
+
+### Step 3: Verify and Debug
+
+1. **Ensure that PHP is configured correctly on the web server**:
+   - Create a `phpinfo.php` file in `/var/www/html`:
+   ```php
+   <?php
+   phpinfo();
+   ?>
+   ```
+   - Access it from your web browser at `http://VM_RollNumber_1_IP/phpinfo.php`.
+
+2. **Check Apache and MySQL logs for errors**:
+   - Apache logs: `/var/log/apache2/error.log`
+   - MySQL logs: `/var/log/mysql/error.log`
+
+### Step 4: Demonstrate Access from VM_RollNumber_3 and Host System
+
+1. **Ensure VM_RollNumber_3 can access VM_RollNumber_1**:
+   - From VM_RollNumber_3, open a web browser and navigate to `http://VM_RollNumber_1_IP/index.php`.
+
+2. **Ensure the host system can access VM_RollNumber_1**:
+   - From your host system, open a web browser and navigate to `http://VM_RollNumber_1_IP/index.php`.
+
+### Troubleshooting Tips
+- Make sure the MySQL user has the correct permissions and that the MySQL server allows connections from VM_RollNumber_1.
+- Ensure no firewall rules are blocking the communication between the VMs.
+
+If you encounter specific errors or issues, feel free to provide more details so I can assist you further.
