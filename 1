@@ -57,3 +57,32 @@ CREATE TABLE records (
     email TEXT NOT NULL
 );
 
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Records</title>
+</head>
+<body>
+    <h1>Records</h1>
+    <form action="/add" method="post">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required><br><br>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required><br><br>
+        <button type="submit">Add Record</button>
+    </form>
+    
+    <hr>
+    
+    <h2>Existing Records:</h2>
+    <ul>
+        {% for record in records %}
+            <li>{{ record['name'] }} - {{ record['email'] }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
+
+
