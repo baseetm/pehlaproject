@@ -6,7 +6,7 @@ This repository contains a sample web application built using Flask and deployed
 
 ## Application Functionality
 
-The application is a simple Flask web server that displays "Time table for PGDE trimester II" when accessed at the root URL.
+The application is a simple Flask web server that displays " " when accessed at the root URL.
 
 ## Steps to Deploy
 
