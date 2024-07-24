@@ -1,0 +1,48 @@
+from flask import Flask, render_template, request, redirect, url_for
+import sqlite3
+
+app = Flask(__name__)
+app.config['SECRET_KEY'] = 'your_secret_key'
+
+# Database connection
+def get_db_connection():
+    conn = sqlite3.connect('database.db')
+    conn.row_factory = sqlite3.Row
+    return conn
+
+# Initialize the database
+def init_db():
+    conn = get_db_connection()
+    with app.open_resource('schema.sql', mode='r') as f:
+        conn.cursor().executescript(f.read())
+    conn.commit()
+    conn.close()
+
+# Create the database schema
+@app.before_first_request
+def before_first_request():
+    init_db()
+
+# Index route - display records
+@app.route('/')
+def index():
+    conn = get_db_connection()
+    records = conn.execute('SELECT * FROM records').fetchall()
+    conn.close()
+    return render_template('index.html', records=records)
+
+# Insert record route
+@app.route('/add', methods=['POST'])
+def add_record():
+    name = request.form['name']
+    email = request.form['email']
+    
+    conn = get_db_connection()
+    conn.execute('INSERT INTO records (name, email) VALUES (?, ?)', (name, email))
+    conn.commit()
+    conn.close()
+    
+    return redirect(url_for('index'))
+
+if __name__ == '__main__':
+    app.run(debug=True)
