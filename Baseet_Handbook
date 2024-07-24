@@ -70,44 +70,44 @@ We'll use VirtualBox as the hypervisor and Ubuntu Server as the Linux distributi
 
 2. **Insert the following PHP code**:
    ```php
-   <?php
-   $servername = "VM_RollNumber_2_IP";
-   $username = "webapp_user";
-   $password = "password";
-   $dbname = "webapp_db";
+<?php
+$servername = "VM_RollNumber_2_IP";
+$username = "webapp_user";
+$password = "password";
+$dbname = "webapp_db";
 
-   // Create connection
-   $conn = new mysqli($servername, $username, $password, $dbname);
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
 
-   // Check connection
-   if ($conn->connect_error) {
-       die("Connection failed: " . $conn->connect_error);
-   }
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
 
-   if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-       $name = $_POST['name'];
-       $sql = "INSERT INTO records (name) VALUES ('$name')";
-       $conn->query($sql);
-   }
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $name = $_POST['name'];
+    $sql = "INSERT INTO records (name) VALUES ('$name')";
+    $conn->query($sql);
+}
 
-   $result = $conn->query("SELECT * FROM records");
-   ?>
+$result = $conn->query("SELECT * FROM records");
+?>
 
-   <!DOCTYPE html>
-   <html>
-   <body>
-   <form method="post">
-       Name: <input type="text" name="name">
-       <input type="submit" value="Submit">
-   </form>
-   <h2>Records:</h2>
-   <ul>
-       <?php while($row = $result->fetch_assoc()): ?>
-           <li><?php echo $row['name']; ?></li>
-       <?php endwhile; ?>
-   </ul>
-   </body>
-   </html>
+<!DOCTYPE html>
+<html>
+<body>
+<form method="post">
+    Name: <input type="text" name="name">
+    <input type="submit" value="Submit">
+</form>
+<h2>Records:</h2>
+<ul>
+    <?php while($row = $result->fetch_assoc()): ?>
+        <li><?php echo $row['name']; ?></li>
+    <?php endwhile; ?>
+</ul>
+</body>
+</html>
    ```
 
 3. **Create the records table in the database**:
