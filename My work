@@ -1,0 +1,140 @@
+Here's a step-by-step guide to creating the virtual machines, configuring them, and deploying the application as required:
+
+### Step 1: Create Virtual Machines
+We'll use VirtualBox as the hypervisor and Ubuntu Server as the Linux distribution. Replace "RollNumber" with your actual roll number.
+
+1. **Install VirtualBox**:
+   - Download and install VirtualBox from [https://www.virtualbox.org/](https://www.virtualbox.org/).
+
+2. **Create VM_RollNumber_1**:
+   - Open VirtualBox, click "New", and name it `VM_RollNumber_1`.
+   - Select `Linux` and `Ubuntu (64-bit)`.
+   - Allocate memory (at least 1024 MB) and create a virtual hard disk (at least 10 GB).
+   - Start the VM and install Ubuntu Server from the ISO image.
+
+3. **Create VM_RollNumber_2**:
+   - Repeat the above steps, naming this VM `VM_RollNumber_2`.
+
+4. **Create VM_RollNumber_3**:
+   - Repeat the above steps, naming this VM `VM_RollNumber_3`.
+
+### Step 2: Configure the VMs
+1. **Network Configuration**:
+   - Ensure all VMs are connected to the same network (NAT Network or Bridged Adapter).
+   - Set static IP addresses for each VM to ensure consistent communication.
+
+2. **Install necessary software**:
+   - SSH into each VM to install the required software.
+
+### Step 3: Install Web Server on VM_RollNumber_1
+1. **Update and install Apache**:
+   ```sh
+   sudo apt update
+   sudo apt install apache2 -y
+   ```
+
+2. **Enable Apache to start on boot**:
+   ```sh
+   sudo systemctl enable apache2
+   sudo systemctl start apache2
+   ```
+
+### Step 4: Install Database on VM_RollNumber_2
+1. **Update and install MySQL**:
+   ```sh
+   sudo apt update
+   sudo apt install mysql-server -y
+   ```
+
+2. **Secure MySQL installation**:
+   ```sh
+   sudo mysql_secure_installation
+   ```
+
+3. **Create a database and user for the web application**:
+   ```sh
+   sudo mysql -u root -p
+   CREATE DATABASE webapp_db;
+   CREATE USER 'webapp_user'@'%' IDENTIFIED BY 'password';
+   GRANT ALL PRIVILEGES ON webapp_db.* TO 'webapp_user'@'%';
+   FLUSH PRIVILEGES;
+   EXIT;
+   ```
+
+### Step 5: Develop and Deploy the Web Application
+1. **Create a simple PHP application on VM_RollNumber_1**:
+   ```sh
+   sudo apt install php libapache2-mod-php php-mysql -y
+   sudo nano /var/www/html/index.php
+   ```
+
+2. **Insert the following PHP code**:
+   ```php
+   <?php
+   $servername = "VM_RollNumber_2_IP";
+   $username = "webapp_user";
+   $password = "password";
+   $dbname = "webapp_db";
+
+   // Create connection
+   $conn = new mysqli($servername, $username, $password, $dbname);
+
+   // Check connection
+   if ($conn->connect_error) {
+       die("Connection failed: " . $conn->connect_error);
+   }
+
+   if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+       $name = $_POST['name'];
+       $sql = "INSERT INTO records (name) VALUES ('$name')";
+       $conn->query($sql);
+   }
+
+   $result = $conn->query("SELECT * FROM records");
+   ?>
+
+   <!DOCTYPE html>
+   <html>
+   <body>
+   <form method="post">
+       Name: <input type="text" name="name">
+       <input type="submit" value="Submit">
+   </form>
+   <h2>Records:</h2>
+   <ul>
+       <?php while($row = $result->fetch_assoc()): ?>
+           <li><?php echo $row['name']; ?></li>
+       <?php endwhile; ?>
+   </ul>
+   </body>
+   </html>
+   ```
+
+3. **Create the records table in the database**:
+   ```sh
+   sudo mysql -u webapp_user -p -h VM_RollNumber_2_IP -D webapp_db
+   CREATE TABLE records (id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(255) NOT NULL);
+   ```
+
+### Step 6: Access the Web Application
+1. **From VM_RollNumber_3**:
+   - Open a web browser and navigate to `http://VM_RollNumber_1_IP/index.php`.
+
+2. **From the Host System**:
+   - Open a web browser and navigate to `http://VM_RollNumber_1_IP/index.php`.
+
+### Step 7: Record the Demonstration
+1. **Screen-record the network configuration**:
+   - Show the IP configuration for each VM using `ifconfig` or `ip addr`.
+
+2. **Screen-record accessing the application**:
+   - From VM_RollNumber_3.
+   - From the host system.
+
+3. **Upload the video to YouTube**:
+   - Ensure the video clearly shows the required steps and configurations.
+
+### Submission
+- Share the YouTube video link as required.
+
+This should provide a comprehensive guide to completing the task. If you need further assistance with any specific step, feel free to ask!
