@@ -58,3 +58,26 @@ C(myenv) root@ubuntu:~/workspace# history
    57  sudo nano app.py
    58  python3 app.py
    59  history
+mysql> create user 'john'@'192.168.29.69' identified by 'john123';
+ERROR 1819 (HY000): Your password does not satisfy the current policy requirements
+mysql> create user 'john'@'192.168.29.69' identified by 'John@1234';
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> SELECT user, host FROM mysql.user;
++------------------+---------------+
+| user             | host          |
++------------------+---------------+
+| john             | 192.168.29.69 |
+| debian-sys-maint | localhost     |
+| mysql.infoschema | localhost     |
+| mysql.session    | localhost     |
+| mysql.sys        | localhost     |
+| root             | localhost     |
++------------------+---------------+
+6 rows in set (0.00 sec)
+
+grant all privileges on mydb.* to 'john'@'192.168.29.69';
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> exit
+
