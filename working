@@ -81,3 +81,42 @@ Query OK, 0 rows affected (0.00 sec)
 
 mysql> exit
 
+
+    1  sudo mysql_secure_installation
+    2  sudo nano mysql.sh
+    3  sudo apt install apache2 -y
+    4  ifconfig
+    5  apt install net-tools
+    6  ifconfig
+    7  sudo nano /var/www/html/index.php
+    8  sudo systemctl restart apache2
+    9  sudo nano /var/www/html/index.php
+   10  sudo ufw enable 
+   11  sudo systemctl restart apache2
+   12  tail -f /var/log/php/error.log
+   13  cd /var
+   14  ls
+   15  cd log
+   16  ls
+   17  sudo nano lastlog
+   18  ls -1
+   19  ls
+   20  cd /var/www/html  
+   21  ls
+   22  chmod 777 index.php
+   23  sudo systemctl restart apache2
+   24  sudo nano index.html
+   25* 
+   26  sudo nano /var/www/html/index.php
+   27  sudo systemctl start apache2
+   28  sudo systemctl restart apache2
+   29  sudo systemctl stop apache2
+   30  sudo systemctl start apache2
+   31  sudo systemctl restart apache2
+   32  sudo nano /var/www/html/index.php
+   33  sudo systemctl restart apache2
+   34  sudo nano /var/www/html/index.php
+   35  ls
+   36  history 
+root@ubuntu:/var/
+
