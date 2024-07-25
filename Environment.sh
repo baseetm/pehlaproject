@@ -1,9 +1,9 @@
 ###############python environment create##############
-python3 -m venv myworkspace
-source myworkspace /bin/activate
-source myworkspace/bin/activate
+python3 -m venv myworkspace2
+source myworkspace2 /bin/activate
+source myworkspace2/bin/activate
 ###############################################
-cd myworkspace
+cd myworkspace2
 sudo nano mysql.sh
 apt install python3-pip
 pip install Flask mysql-connector-python
