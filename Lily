@@ -1,12 +1,57 @@
+VM1
 sudo apt update
 sudo apt install apache2
 sudo systemctl start apache2
 sudo systemctl enable apache2
-    
 sudo apt install php libapache2-mod-php php-mysql
+sudo nano /var/www/html/index.php
+
+<?php
+$servername = "VM_RollNumber_2_IP";
+$username = "testuser";
+$password = "password";
+$dbname = "testdb";
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Insert record
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $data = $_POST['data'];
+    $sql = "INSERT INTO test_table (data) VALUES ('$data')";
+    if ($conn->query($sql) === TRUE) {
+        echo "New record created successfully";
+    } else {
+        echo "Error: " . $sql . "<br>" . $conn->error;
+    }
+}
+
+// Display records
+$sql = "SELECT id, data FROM test_table";
+$result = $conn->query($sql);
+if ($result->num_rows > 0) {
+    while($row = $result->fetch_assoc()) {
+        echo "id: " . $row["id"]. " - Data: " . $row["data"]. "<br>";
+    }
+} else {
+    echo "0 results";
+}
+
+$conn->close();
+?>
+
+<form method="POST">
+    Data: <input type="text" name="data">
+    <input type="submit">
+</form>
 
 
-
+VM2_______________
 sudo apt update
 sudo apt install mysql-server
 sudo systemctl start mysql
@@ -14,95 +59,23 @@ sudo systemctl enable mysql
 sudo mysql_secure_installation
 sudo mysql -u root -p
 CREATE DATABASE testdb;
-    CREATE USER 'testuser'@'%' IDENTIFIED BY 'password';
-    GRANT ALL PRIVILEGES ON testdb.* TO 'testuser'@'%';
-    FLUSH PRIVILEGES;
-    EXIT;
-    ```
+create user 'john'@'192.168.29.69' identified by 'John@1234';
+grant all privileges on mydb.* to 'john'@'192.168.29.69';
+FLUSH PRIVILEGES;
+EXIT;
 
-4. **Configure MySQL to Allow Remote Connections:**
-    ```sh
-    sudo nano /etc/mysql/mysql.conf.d/mysqld.cnf
-    ```
-
-    Comment out `bind-address` line:
-    ```
-    #bind-address = 127.0.0.1
-    ```
-
-    Restart MySQL:
-    ```sh
-    sudo systemctl restart mysql
-    ```
-
-### Step 4: Develop the Web Application
-
-1. **Create a PHP Script:**
-
-    ```php
-    // /var/www/html/index.php
-    <?php
-    $servername = "VM_RollNumber_2_IP";
-    $username = "testuser";
-    $password = "password";
-    $dbname = "testdb";
-
-    // Create connection
-    $conn = new mysqli($servername, $username, $password, $dbname);
-
-    // Check connection
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
-
-    // Insert record
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        $data = $_POST['data'];
-        $sql = "INSERT INTO test_table (data) VALUES ('$data')";
-        if ($conn->query($sql) === TRUE) {
-            echo "New record created successfully";
-        } else {
-            echo "Error: " . $sql . "<br>" . $conn->error;
-        }
-    }
-
-    // Display records
-    $sql = "SELECT id, data FROM test_table";
-    $result = $conn->query($sql);
-    if ($result->num_rows > 0) {
-        while($row = $result->fetch_assoc()) {
-            echo "id: " . $row["id"]. " - Data: " . $row["data"]. "<br>";
-        }
-    } else {
-        echo "0 results";
-    }
-
-    $conn->close();
-    ?>
-
-    <form method="POST">
-        Data: <input type="text" name="data">
-        <input type="submit">
-    </form>
-    ```
-
-2. **Create a Table in MySQL:**
-
-    ```sql
-    sudo mysql -u root -p
-
-    USE testdb;
-    CREATE TABLE test_table (
-        id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-        data VARCHAR(30) NOT NULL
-    );
-    EXIT;
-    ```
-
-### Step 5: Network Configuration
-
-Ensure the VMs can communicate with each other. You might need to configure network adapters in VirtualBox:
-
+sudo nano /etc/mysql/mysql.conf.d/mysqld.cnf
+Comment out `bind-address` line:
+#bind-address = 127.0.0.1
+sudo systemctl restart mysql
+sudo mysql -u root -p
+USE testdb;
+CREATE TABLE test_table (
+ id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+ data VARCHAR(30) NOT NULL
+);
+EXIT;
+    
 1. **Set VMs to Use Bridged Adapter:**
     - Open VM settings.
     - Go to Network.
