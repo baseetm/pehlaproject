@@ -4,7 +4,6 @@ source myworkspace2 /bin/activate
 source myworkspace2/bin/activate
 ###############################################
 cd myworkspace2
-sudo nano mysql.sh
 apt install python3-pip
 pip install Flask mysql-connector-python
 python3 app.py
