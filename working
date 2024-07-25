@@ -88,5 +88,6 @@ CREATE TABLE test_table (
     id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     data VARCHAR(30) NOT NULL
 );
+INSERT INTO test_table (data) VALUES ('data1'), ('data2'), ('data3'), ('data4'), ('data5');
 
 
