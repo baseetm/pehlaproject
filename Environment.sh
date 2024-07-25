@@ -1,4 +1,5 @@
 ###############python environment create##############
+pip install python3
 python3 -m venv myworkspace2
 source myworkspace2 /bin/activate
 source myworkspace2/bin/activate
