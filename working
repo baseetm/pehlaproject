@@ -91,3 +91,4 @@ CREATE TABLE test_table (
 INSERT INTO test_table (data) VALUES ('data1'), ('data2'), ('data3'), ('data4'), ('data5');
 
 
+SELECT * FROM test_table;
