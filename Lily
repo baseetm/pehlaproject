@@ -1,43 +1,19 @@
-Sure, here is a detailed guide along with the necessary code snippets to complete the assignment:
+sudo apt update
+sudo apt install apache2
+sudo systemctl start apache2
+sudo systemctl enable apache2
+    
+sudo apt install php libapache2-mod-php php-mysql
 
-### Step 1: Create Virtual Machines
-Assume you are using VirtualBox. Create three VMs with any Linux distribution (e.g., Ubuntu).
 
-### Step 2: Set Up VM_RollNumber_1 (Web Server)
 
-1. **Install Apache:**
-    ```sh
-    sudo apt update
-    sudo apt install apache2
-    sudo systemctl start apache2
-    sudo systemctl enable apache2
-    ```
-
-2. **Install PHP (for web application):**
-    ```sh
-    sudo apt install php libapache2-mod-php php-mysql
-    ```
-
-### Step 3: Set Up VM_RollNumber_2 (Database)
-
-1. **Install MySQL:**
-    ```sh
-    sudo apt update
-    sudo apt install mysql-server
-    sudo systemctl start mysql
-    sudo systemctl enable mysql
-    ```
-
-2. **Secure MySQL Installation:**
-    ```sh
-    sudo mysql_secure_installation
-    ```
-
-3. **Create a Database and User:**
-    ```sql
-    sudo mysql -u root -p
-
-    CREATE DATABASE testdb;
+sudo apt update
+sudo apt install mysql-server
+sudo systemctl start mysql
+sudo systemctl enable mysql
+sudo mysql_secure_installation
+sudo mysql -u root -p
+CREATE DATABASE testdb;
     CREATE USER 'testuser'@'%' IDENTIFIED BY 'password';
     GRANT ALL PRIVILEGES ON testdb.* TO 'testuser'@'%';
     FLUSH PRIVILEGES;
