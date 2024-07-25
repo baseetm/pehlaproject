@@ -108,3 +108,138 @@ EXIT;
     - Submit the YouTube video link.
 
 Let me know if you need any more help!
+
+
+---------------------------------------
+If your web browser in VM_RollNumber_3 is showing a blank page when you navigate to http://<VM_RollNumber_1_IP>, it indicates that there might be an issue with the PHP script or the web server configuration on VM_RollNumber_1. Here are some troubleshooting steps to resolve this issue:
+
+Step 1: Check Apache Server Status on VM_RollNumber_1
+Ensure that the Apache server is running:
+
+sh
+Copy code
+sudo systemctl status apache2
+If the server is not running, start it:
+
+sh
+Copy code
+sudo systemctl start apache2
+Step 2: Check Apache Error Logs
+Look at the Apache error logs to see if there are any issues with the PHP script:
+
+sh
+Copy code
+sudo tail -f /var/log/apache2/error.log
+Step 3: Verify PHP Installation
+Ensure PHP is correctly installed and configured with Apache:
+
+Create a PHP info file to check PHP configuration:
+
+sh
+Copy code
+sudo nano /var/www/html/info.php
+Add the following content:
+
+php
+Copy code
+<?php
+phpinfo();
+?>
+Navigate to http://<VM_RollNumber_1_IP>/info.php from your browser on VM_RollNumber_3. If PHP is installed correctly, you should see the PHP information page.
+
+If the PHP info page works, delete the info.php file:
+
+sh
+Copy code
+sudo rm /var/www/html/info.php
+Step 4: Check Database Connection
+Ensure that the PHP script can connect to the MySQL database on VM_RollNumber_2:
+
+Open the PHP script:
+
+sh
+Copy code
+sudo nano /var/www/html/index.php
+Add error reporting at the beginning of the PHP script to see any PHP errors:
+
+php
+Copy code
+<?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+$servername = "VM_RollNumber_2_IP";  // Replace with the actual IP of VM_RollNumber_2
+$username = "testuser";
+$password = "password";
+$dbname = "testdb";
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Insert record
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $data = $_POST['data'];
+    $sql = "INSERT INTO test_table (data) VALUES ('$data')";
+    if ($conn->query($sql) === TRUE) {
+        echo "New record created successfully";
+    } else {
+        echo "Error: " . $sql . "<br>" . $conn->error;
+    }
+}
+
+// Display records
+$sql = "SELECT id, data FROM test_table";
+$result = $conn->query($sql);
+if ($result->num_rows > 0) {
+    while($row = $result->fetch_assoc()) {
+        echo "id: " . $row["id"]. " - Data: " . $row["data"]. "<br>";
+    }
+} else {
+    echo "0 results";
+}
+
+$conn->close();
+?>
+
+<form method="POST">
+    Data: <input type="text" name="data">
+    <input type="submit">
+</form>
+Ensure the IP address of VM_RollNumber_2 is correct in the $servername variable.
+
+Save the file and try accessing the web application again from VM_RollNumber_3.
+
+Step 5: Check Firewall Settings
+Ensure that there are no firewall rules blocking the connection between the VMs.
+
+On VM_RollNumber_1, check if the firewall is enabled:
+
+sh
+Copy code
+sudo ufw status
+If the firewall is active, allow HTTP traffic:
+
+sh
+Copy code
+sudo ufw allow 80/tcp
+sudo ufw reload
+Similarly, ensure MySQL is accessible from VM_RollNumber_1 and VM_RollNumber_3:
+
+sh
+Copy code
+sudo ufw allow 3306/tcp
+sudo ufw reload
+By following these steps, you should be able to troubleshoot and resolve the issue of the blank page when accessing the web application from VM_RollNumber_3. If the problem persists, please share any error messages or logs for further assistance.
+
+
+
+
+
+
+
+
