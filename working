@@ -81,5 +81,5 @@ Query OK, 0 rows affected (0.00 sec)
 
 mysql> exit
 
-INSERT INTO employees (id, first_name, last_name, email)
+INSERT INTO data (id, first_name, last_name, email)
 VALUES (1, 'John', 'Doe', 'john.doe@example.com');
