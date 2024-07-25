@@ -1,0 +1,53 @@
+ubuntu@ubuntu:~/pehlaproject$ history
+    1  git config --user.name "sudh1994"
+    2  sudo apt update
+    3  sudo apt install git
+    4  git config --global user.name "sudh1994"
+    5  git config --global user.email "sudhanshu7492@gmail.com"
+    6  git clone https://github.com/baseetm/pehlaproject.git
+    7  ls
+    8  cd pehlaproject/
+    9  ls
+   10  chmod +x Environment2.sh
+   11  ./Environment.sh
+   12  sudo chmod +x Environment2.sh
+   13  ./Environment2.sh 
+   14  sudo mysql -u root -p
+   15  show databses
+   16  show databases
+   17  show databases;
+   18  usedb
+   19  use mydb
+   20  cls
+   21  clear
+   22  sudo mysql -u root -p
+   23  ifconfig
+   24  sudo apt install net-tools
+   25  ifconfig
+   26  sudo nano index.php
+   27  sudo systemctl restart apache2
+   28  sudo systemctl restart mysql
+   29  grep bind-address /etc/mysql/mysql.conf.d/mysqld.cnf
+   30  sudo nano /etc/mysql/mysql.conf.d/mysqld.cnf
+   31  sudo systemctl start mysql
+   32  sudo systemctl start apache2
+   33  sudo nano /etc/mysql/mysql.conf.d/mysqld.cnf
+   34  sudo systemctl start mysql
+   35  sudo systemctl restart mysql
+   36  sudo nano index.php
+   37  sudo systemctl restart apache2
+   38  sudo mysql -u root -p
+   39  sudo systemctl start mysql
+   40  sudo systemctl start apache2
+   41  ifconfig
+   42  sudo nano index.php
+   43  sudo systemctl restart apache2
+   44  ls
+   45  cd pehlaproject/
+   46  ls
+   47  git pull
+   48  sudo nano /var/www/html/index.php
+   49  sudo systemctl restart apache2
+   50  history
+   51  sudo mysql -u root -p
+   52  history
