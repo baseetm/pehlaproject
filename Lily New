@@ -16,3 +16,17 @@ sudo ufw reload
 
 sudo mysql -u lily -p -h 192.168.56.104 -D webapp_db
 sudo apt install mysql-server
+sudo mysql -u lily -p -h 192.168.56.104 -D webapp_db
+cd /var/www/html
+ls
+sudo nano index.php
+php -S localhost:8000
+sudo cp index.php 
+cd
+nano index.php
+php index.php
+rm index.php
+nano index.php
+php index.php
+
+sudo apt install php-mysql
