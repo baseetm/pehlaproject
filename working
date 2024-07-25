@@ -81,3 +81,12 @@ Query OK, 0 rows affected (0.00 sec)
 
 mysql> exit
 
+CREATE DATABASE testdb;
+USE testdb;
+
+CREATE TABLE test_table (
+    id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    data VARCHAR(30) NOT NULL
+);
+
+
