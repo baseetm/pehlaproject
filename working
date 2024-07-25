@@ -81,14 +81,5 @@ Query OK, 0 rows affected (0.00 sec)
 
 mysql> exit
 
-CREATE DATABASE testdb;
-USE testdb;
-
-CREATE TABLE test_table (
-    id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    data VARCHAR(30) NOT NULL
-);
-INSERT INTO test_table (data) VALUES ('data1'), ('data2'), ('data3'), ('data4'), ('data5');
-
-
-SELECT * FROM test_table;
+INSERT INTO employees (id, first_name, last_name, email)
+VALUES (1, 'John', 'Doe', 'john.doe@example.com');
