@@ -31,3 +31,10 @@ FLUSH PRIVILEGES;
 EXIT
 sudo nano /etc/MySQL/ ### go to file and comment bind address
 sudo service MySQL restart
+
+
+CREATE TABLE users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL
+);
