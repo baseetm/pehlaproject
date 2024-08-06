@@ -39,3 +39,27 @@ sudo nano /etc/mysql/mysql.conf.d/mysqld.cnf
 sudo service mysql restart
 
 
+VM3
+================================================
+sudo apt update
+sudo apt upgrade -y
+sudo apt install apache2 -y
+sudo a2enmod proxy
+sudo a2enmod proxy_http
+sudo a2enmod proxy_balancer
+sudo a2enmod lbmethod_byrequests
+sudo a2enmod ssl
+sudo   systemctl restart apache2
+sudo nano /etc/apache2/sites-available/000-default.conf
+###
+        ProxyRequests Off
+        ProxyPass / http://35.184.59.119:80/
+        ProxyPassReverse / http://35.184.59.119:80/
+
+        <Proxy *>
+            Order allow,deny
+            Allow from all
+        </Proxy>
+###
+sudo apache2ctl configtest
+sudo systemctl reload apache2
