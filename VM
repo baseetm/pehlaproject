@@ -33,7 +33,8 @@ CREATE TABLE users (
     email VARCHAR(100) NOT NULL
 );
 EXIT
-sudo nano /etc/MySQL/ ### go to file and comment bind address
+sudo nano /etc/mysql/mysql.conf.d/mysqld.cnf
+#####comment bind address#####
 sudo service mysql restart
 
 
