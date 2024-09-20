@@ -5,3 +5,22 @@ sudo nano app.py
 sudo chmod +X ./app.py
 ls -l ./app.py
 python3 ./app.py
+
+
+
+version: '3.8'
+
+services:
+  web:
+    image: my-flask-app
+    build: .
+    ports:
+      - "5000"  # Internal port; external ports will be mapped dynamically
+    deploy:
+      replicas: 20
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: "512M"
+      restart_policy:
+        condition: on-failure
