@@ -1,0 +1,7 @@
+sudo apt install python3-pip
+sudo apt install mailutils
+sudo apt install python3-flask
+sudo nano app.py
+sudo chmod +X ./app.py
+ls -l ./app.py
+python3 ./app.py
