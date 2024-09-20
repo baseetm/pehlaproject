@@ -24,3 +24,22 @@ services:
           memory: "512M"
       restart_policy:
         condition: on-failure
+
+
+
+version: '3.8'
+
+services:
+  web:
+    image: my-flask-app
+    build: .
+    ports:
+      - "8000:5000"
+    deploy:
+      replicas: 20
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: "512M"
+      restart_policy:
+        condition: on-failure
